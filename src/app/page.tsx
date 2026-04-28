@@ -23,7 +23,7 @@ const navLinks = [
   { label: "Beranda", href: "/" },
   { label: "Produk", href: "/produk" },
   { label: "Blog", href: "/blog" },
-  { label: "Kontak", href: "#footer" },
+  { label: "Kontak", href: "https://wa.me/6289514317357" },
 ];
 
 const benefits = [
