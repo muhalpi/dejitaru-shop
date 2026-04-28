@@ -1,0 +1,14 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D1B5A"/>
+      <stop offset="0.55" stop-color="#4426A8"/>
+      <stop offset="1" stop-color="#1EA1FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="28" fill="url(#g1)"/>
+  <circle cx="940" cy="120" r="180" fill="#9C4DFF" fill-opacity="0.35"/>
+  <circle cx="270" cy="500" r="200" fill="#2FD4FF" fill-opacity="0.28"/>
+  <text x="96" y="250" fill="white" font-family="Arial, sans-serif" font-size="62" font-weight="700">CapCut Pro</text>
+  <text x="96" y="330" fill="#D6D3FF" font-family="Arial, sans-serif" font-size="34">Workflow konten lebih cepat</text>
+</svg>

@@ -1,0 +1,40 @@
+﻿<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="1050" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#26186C"/>
+      <stop offset="0.5" stop-color="#12133F"/>
+      <stop offset="1" stop-color="#07102C"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="290" y1="640" x2="930" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C026D3"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="card" x1="390" y1="170" x2="860" y2="550" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D2A7A"/>
+      <stop offset="1" stop-color="#0B123A"/>
+    </linearGradient>
+    <filter id="glow" x="228" y="560" width="764" height="164" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="24" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <circle cx="188" cy="140" r="150" fill="#7E22CE" fill-opacity="0.35"/>
+  <circle cx="1035" cy="165" r="170" fill="#2563EB" fill-opacity="0.3"/>
+
+  <ellipse cx="610" cy="640" rx="310" ry="30" stroke="url(#ring)" stroke-width="18" filter="url(#glow)"/>
+
+  <rect x="350" y="170" width="500" height="390" rx="36" fill="url(#card)" stroke="#A855F7" stroke-opacity="0.55" stroke-width="4"/>
+  <rect x="386" y="210" width="428" height="270" rx="22" fill="#050A23" stroke="#F5F3FF" stroke-opacity="0.22"/>
+
+  <text x="420" y="300" fill="#FFFFFF" font-size="48" font-family="Segoe UI, Arial, sans-serif" font-weight="700">UPLOAD HERO IMAGE</text>
+  <text x="420" y="350" fill="#A5B4FC" font-size="30" font-family="Segoe UI, Arial, sans-serif">Ganti file ini dengan gambar kamu</text>
+  <text x="420" y="398" fill="#A5B4FC" font-size="30" font-family="Segoe UI, Arial, sans-serif">/public/assets/hero-right-placeholder.svg</text>
+
+  <rect x="420" y="438" width="220" height="52" rx="12" fill="#9333EA"/>
+  <text x="458" y="472" fill="#FFFFFF" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="600">Preview</text>
+</svg>

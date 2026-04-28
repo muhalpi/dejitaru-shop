@@ -1,0 +1,14 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A103D"/>
+      <stop offset="0.55" stop-color="#5D1FAF"/>
+      <stop offset="1" stop-color="#FF4D7F"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" rx="28" fill="url(#g3)"/>
+  <circle cx="980" cy="160" r="190" fill="#8E68FF" fill-opacity="0.33"/>
+  <circle cx="270" cy="510" r="170" fill="#FF7AA1" fill-opacity="0.26"/>
+  <text x="96" y="250" fill="white" font-family="Arial, sans-serif" font-size="62" font-weight="700">Topup Game</text>
+  <text x="96" y="330" fill="#F6D4FF" font-family="Arial, sans-serif" font-size="34">Pastikan User ID dan server tepat</text>
+</svg>
