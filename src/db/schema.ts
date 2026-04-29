@@ -13,6 +13,7 @@ export const productCategoryEnum = pgEnum("product_category", [
   "PULSA",
   "TOKEN_LISTRIK",
   "TOPUP_GAME",
+  "LAINNYA",
 ]);
 
 export const productVariantTypeEnum = pgEnum("product_variant_type", [

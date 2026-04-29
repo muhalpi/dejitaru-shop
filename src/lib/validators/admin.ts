@@ -5,6 +5,7 @@ export const productCategorySchema = z.enum([
   "PULSA",
   "TOKEN_LISTRIK",
   "TOPUP_GAME",
+  "LAINNYA",
 ]);
 
 const productImageUrlSchema = z

@@ -14,7 +14,7 @@ type ParsedImportRow = {
   changes: {
     name?: string;
     slug?: string;
-    category?: "APPS_PREMIUM" | "PULSA" | "TOKEN_LISTRIK" | "TOPUP_GAME";
+    category?: "APPS_PREMIUM" | "PULSA" | "TOKEN_LISTRIK" | "TOPUP_GAME" | "LAINNYA";
     description?: string;
     imageUrl?: string | null;
     termsAndConditions?: string;

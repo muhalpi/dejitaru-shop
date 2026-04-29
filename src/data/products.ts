@@ -3,6 +3,7 @@ export const productCategories = [
   "Pulsa",
   "Token Listrik",
   "Topup Game",
+  "Lainnya",
 ] as const;
 
 export type ProductCategory = (typeof productCategories)[number];
@@ -110,6 +111,17 @@ const requirementsByCategory: Record<ProductCategory, ProductRequirementField[]>
       placeholder: "Contoh: 1234",
       required: false,
       helperText: "Isi untuk game yang membutuhkan server ID.",
+    },
+  ],
+  Lainnya: [
+    {
+      key: "customerWhatsapp",
+      label: "Nomor WhatsApp Aktif",
+      inputType: "TEL",
+      placeholder: "Contoh: 081234567890",
+      required: true,
+      validationRegex: "^(?:\\+?62|0)[2-9][0-9]{7,12}$",
+      helperText: "Nomor aktif untuk konfirmasi dan proses pesanan.",
     },
   ],
 };

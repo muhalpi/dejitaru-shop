@@ -15,7 +15,7 @@ type AdminDashboardProps = {
   initialProducts: AdminCatalogProduct[];
 };
 
-type CategoryOption = "APPS_PREMIUM" | "PULSA" | "TOKEN_LISTRIK" | "TOPUP_GAME";
+type CategoryOption = "APPS_PREMIUM" | "PULSA" | "TOKEN_LISTRIK" | "TOPUP_GAME" | "LAINNYA";
 type InputTypeOption = "TEXT" | "NUMBER" | "TEL" | "SELECT";
 type AdminTab = "produk" | "varian" | "requirement";
 type ProductFormSnapshot = {
@@ -34,6 +34,7 @@ const categoryOptions: CategoryOption[] = [
   "PULSA",
   "TOKEN_LISTRIK",
   "TOPUP_GAME",
+  "LAINNYA",
 ];
 
 const inputTypeOptions: InputTypeOption[] = ["TEXT", "NUMBER", "TEL", "SELECT"];

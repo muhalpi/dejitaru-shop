@@ -30,6 +30,10 @@ const fallbackColorByCategory: Record<ProductCategory, string[]> = {
     "from-blue-400/90 to-fuchsia-500/80",
     "from-violet-500/90 to-indigo-600/80",
   ],
+  Lainnya: [
+    "from-slate-500/90 to-zinc-600/80",
+    "from-teal-500/90 to-cyan-600/80",
+  ],
 };
 
 const categoryMap = {
@@ -37,6 +41,7 @@ const categoryMap = {
   PULSA: "Pulsa",
   TOKEN_LISTRIK: "Token Listrik",
   TOPUP_GAME: "Topup Game",
+  LAINNYA: "Lainnya",
 } as const;
 
 type DbCategory = keyof typeof categoryMap;

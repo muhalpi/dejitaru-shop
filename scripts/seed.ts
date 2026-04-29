@@ -35,6 +35,8 @@ function mapCategory(category: string): DbCategory {
       return "TOKEN_LISTRIK";
     case "Topup Game":
       return "TOPUP_GAME";
+    case "Lainnya":
+      return "LAINNYA";
     default:
       return "APPS_PREMIUM";
   }
