@@ -107,7 +107,7 @@ const faqRight = [
   },
 ];
 
-const heroImageSrc = "/assets/hero-right-placeholder.svg";
+const heroImageSrc = "/assets/dejitaru shop banner mascot.png";
 
 export const dynamic = "force-dynamic";
 
