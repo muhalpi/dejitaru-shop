@@ -16,6 +16,7 @@ type AdminDashboardProps = {
 };
 
 type CategoryOption = "APPS_PREMIUM" | "PULSA" | "TOKEN_LISTRIK" | "TOPUP_GAME" | "LAINNYA";
+type CategoryFilterOption = "SEMUA" | CategoryOption;
 type InputTypeOption = "TEXT" | "NUMBER" | "TEL" | "SELECT";
 type AdminTab = "produk" | "varian" | "requirement";
 type ProductFormSnapshot = {
@@ -36,6 +37,14 @@ const categoryOptions: CategoryOption[] = [
   "TOPUP_GAME",
   "LAINNYA",
 ];
+
+const categoryLabelMap: Record<CategoryOption, string> = {
+  APPS_PREMIUM: "Apps Premium",
+  PULSA: "Pulsa",
+  TOKEN_LISTRIK: "Token Listrik",
+  TOPUP_GAME: "Topup Game",
+  LAINNYA: "Lainnya",
+};
 
 const inputTypeOptions: InputTypeOption[] = ["TEXT", "NUMBER", "TEL", "SELECT"];
 
@@ -228,6 +237,8 @@ export function AdminDashboard({ initialProducts }: AdminDashboardProps) {
     initialProducts[0]?.id ?? null,
   );
   const [productFilter, setProductFilter] = useState("");
+  const [productCategoryFilter, setProductCategoryFilter] =
+    useState<CategoryFilterOption>("SEMUA");
   const [activeTab, setActiveTab] = useState<AdminTab>("produk");
 
   const [isLoading, setIsLoading] = useState(false);
@@ -281,16 +292,19 @@ export function AdminDashboard({ initialProducts }: AdminDashboardProps) {
   const filteredProducts = useMemo(() => {
     const query = productFilter.trim().toLocaleLowerCase("id-ID");
 
-    if (!query) {
-      return products;
-    }
-
     return products.filter(
-      (item) =>
-        item.name.toLocaleLowerCase("id-ID").includes(query) ||
-        item.slug.toLocaleLowerCase("id-ID").includes(query),
+      (item) => {
+        const passCategory =
+          productCategoryFilter === "SEMUA" || item.category === productCategoryFilter;
+        const passQuery =
+          query.length === 0 ||
+          item.name.toLocaleLowerCase("id-ID").includes(query) ||
+          item.slug.toLocaleLowerCase("id-ID").includes(query);
+
+        return passCategory && passQuery;
+      },
     );
-  }, [productFilter, products]);
+  }, [productCategoryFilter, productFilter, products]);
 
   const stats = useMemo(() => {
     const totalProducts = products.length;
@@ -930,6 +944,21 @@ export function AdminDashboard({ initialProducts }: AdminDashboardProps) {
                 placeholder="Cari nama atau slug..."
                 className="border-white/20 bg-[#0b103d]/80"
               />
+
+              <select
+                value={productCategoryFilter}
+                onChange={(event) =>
+                  setProductCategoryFilter(event.target.value as CategoryFilterOption)
+                }
+                className="h-10 w-full rounded-md border border-white/20 bg-[#0b103d]/80 px-3 text-sm"
+              >
+                <option value="SEMUA">Semua Kategori</option>
+                {categoryOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {categoryLabelMap[option]}
+                  </option>
+                ))}
+              </select>
             </CardHeader>
 
             <CardContent className="space-y-3">
