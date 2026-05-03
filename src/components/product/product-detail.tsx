@@ -194,12 +194,25 @@ export function ProductDetail({ product }: ProductDetailProps) {
           {product.description}
         </p>
 
-        <div
-          className={`mb-6 flex h-36 items-center justify-center rounded-2xl bg-gradient-to-br ${product.color}`}
-        >
-          <span className="text-5xl font-extrabold tracking-wider text-white/95">
-            {product.short}
-          </span>
+        <div className="mb-6 h-48 overflow-hidden rounded-2xl border border-white/10 bg-[#090d39]/80">
+          {product.imageUrl ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                className="h-full w-full object-cover"
+              />
+            </>
+          ) : (
+            <div
+              className={`flex h-full items-center justify-center bg-gradient-to-br ${product.color}`}
+            >
+              <span className="text-5xl font-extrabold tracking-wider text-white/95">
+                {product.short}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-[#090d39]/80 p-4">

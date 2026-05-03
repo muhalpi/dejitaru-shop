@@ -144,7 +144,7 @@ export function CartControl({ whatsappNumber, triggerClassName }: CartControlPro
         type="button"
         onClick={() => setIsOpen(true)}
         className={cn(
-          `relative rounded-full border border-fuchsia-400/45 p-2 text-fuchsia-200 transition hover:bg-fuchsia-500/10 ${
+          `relative inline-flex items-center justify-center rounded-full border border-fuchsia-400/45 p-2 align-middle text-fuchsia-200 transition hover:bg-fuchsia-500/10 ${
           isBadgeBump ? "animate-cart-bump" : ""
         }`,
           triggerClassName,

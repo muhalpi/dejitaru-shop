@@ -1123,18 +1123,26 @@ export function AdminDashboard({ initialProducts }: AdminDashboardProps) {
                             : "border-white/10 bg-[#0b103d]/45 hover:border-fuchsia-400/40"
                         }`}
                       >
-                        {product.imageUrl ? (
-                          <>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={product.imageUrl}
-                              alt={`Thumbnail ${product.name}`}
-                              className="mb-2 h-12 w-12 rounded-md border border-white/15 object-cover"
-                            />
-                          </>
-                        ) : null}
-                        <p className="text-sm font-semibold">{product.name}</p>
-                        <p className="mt-0.5 text-xs text-blue-100/60">/{product.slug}</p>
+                        <div className="flex items-start gap-3">
+                          {product.imageUrl ? (
+                            <>
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={product.imageUrl}
+                                alt={`Thumbnail ${product.name}`}
+                                className="h-12 w-12 shrink-0 rounded-md border border-white/15 object-cover"
+                              />
+                            </>
+                          ) : (
+                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-white/15 bg-[#11174d] text-[10px] font-semibold text-blue-100/70">
+                              IMG
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <p className="truncate text-sm font-semibold">{product.name}</p>
+                            <p className="mt-0.5 truncate text-xs text-blue-100/60">/{product.slug}</p>
+                          </div>
+                        </div>
                         <div className="mt-2">
                           <ProductBadges product={product} />
                         </div>
