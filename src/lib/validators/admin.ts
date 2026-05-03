@@ -137,3 +137,59 @@ export const requirementCreateSchema = z.object({
 export const requirementUpdateSchema = requirementCreateSchema.partial().extend({
   id: z.string().uuid(),
 });
+
+const blogCoverSchema = z
+  .string()
+  .trim()
+  .refine((value) => {
+    if (!value) {
+      return false;
+    }
+
+    if (value.startsWith("/")) {
+      return true;
+    }
+
+    try {
+      new URL(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }, "Cover harus berupa URL valid atau path lokal yang diawali '/'.");
+
+const publishedAtSchema = z.preprocess((value) => {
+  if (value instanceof Date) {
+    return value;
+  }
+
+  if (typeof value === "string" || typeof value === "number") {
+    const parsed = new Date(value);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed;
+    }
+  }
+
+  return value;
+}, z.date());
+
+export const blogPostCreateSchema = z.object({
+  title: z.string().trim().min(3),
+  slug: z.string().trim().min(3).regex(/^[a-z0-9-]+$/),
+  excerpt: z.string().trim().min(10),
+  cover: blogCoverSchema,
+  content: z.string().min(10),
+  publishedAt: publishedAtSchema,
+});
+
+export const blogPostUpdateSchema = blogPostCreateSchema.partial().extend({
+  id: z.string().uuid(),
+});
+
+export const storeSettingsUpdateSchema = z.object({
+  whatsappNumber: z
+    .string()
+    .trim()
+    .min(9)
+    .refine((value) => value.replace(/\D/g, "").length >= 9, "Nomor WhatsApp tidak valid."),
+});

@@ -6,6 +6,7 @@ import { homepagePopularProductSlugs, productCatalog } from "../src/data/product
 import {
   productRequirements,
   products,
+  storeSettings,
   productVariants,
   type productCategoryEnum,
   type productInputTypeEnum,
@@ -59,12 +60,32 @@ function serializeTerms(terms: string[]): string {
   return terms.join("\n");
 }
 
+function sanitizeWhatsappNumber(value: string) {
+  const digits = value.replace(/\D/g, "");
+
+  if (digits.startsWith("0")) {
+    return `62${digits.slice(1)}`;
+  }
+
+  return digits;
+}
+
 async function main() {
   console.log("Seed dimulai...");
 
   for (const product of productCatalog) {
     const slug = product.slug;
     const isPopular = homepagePopularProductSlugs.includes(slug);
+    const existingProduct = await db
+      .select({ id: products.id })
+      .from(products)
+      .where(eq(products.slug, slug))
+      .limit(1);
+
+    if (existingProduct.length > 0) {
+      console.log(`- Skip existing: ${product.name}`);
+      continue;
+    }
 
     const inserted = await db
       .insert(products)
@@ -78,17 +99,6 @@ async function main() {
         isActive: true,
         isPopular,
       })
-      .onConflictDoUpdate({
-        target: products.slug,
-        set: {
-          name: product.name,
-          category: mapCategory(product.category),
-          description: product.description,
-          termsAndConditions: serializeTerms(product.terms),
-          isPopular,
-          updatedAt: new Date(),
-        },
-      })
       .returning({ id: products.id });
 
     const productId = inserted[0]?.id;
@@ -96,9 +106,6 @@ async function main() {
     if (!productId) {
       continue;
     }
-
-    await db.delete(productVariants).where(eq(productVariants.productId, productId));
-    await db.delete(productRequirements).where(eq(productRequirements.productId, productId));
 
     if (product.variants.length > 0) {
       await db.insert(productVariants).values(
@@ -138,6 +145,20 @@ async function main() {
 
     console.log(`- Seeded: ${product.name}`);
   }
+
+  const fallbackWhatsappNumber = sanitizeWhatsappNumber(
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "6281234567890",
+  );
+
+  await db
+    .insert(storeSettings)
+    .values({
+      id: "default",
+      whatsappNumber: fallbackWhatsappNumber,
+    })
+    .onConflictDoNothing();
+
+  console.log("- Seeded: Store settings");
 
   console.log("Seed selesai.");
 }

@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Minus, Plus, ShoppingCart, Trash2, X } from "lucide-react";
 import { formatRupiah } from "@/data/products";
-import { getCheckoutWhatsappNumber } from "@/config/contact";
+import { sanitizeWhatsappNumber } from "@/lib/whatsapp";
 import { getCartSubtotal, type CartItem } from "@/lib/cart";
 import { useCart } from "@/hooks/use-cart";
 
@@ -20,16 +20,6 @@ const customerInputLabels: Record<string, string> = {
 const variantTypeLabels: Record<string, string> = {
   VARIAN: "Varian",
 };
-
-function normalizeWhatsappNumber(value: string): string {
-  const digits = value.replace(/\D/g, "");
-
-  if (digits.startsWith("0")) {
-    return `62${digits.slice(1)}`;
-  }
-
-  return digits;
-}
 
 function getInputLabel(key: string): string {
   return customerInputLabels[key] ?? key;
@@ -78,7 +68,11 @@ function buildCheckoutMessage(items: CartItem[], total: number): string {
   return lines.join("\n").trim();
 }
 
-export function CartControl() {
+type CartControlProps = {
+  whatsappNumber: string;
+};
+
+export function CartControl({ whatsappNumber }: CartControlProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isBadgeBump, setIsBadgeBump] = useState(false);
   const { items, count, total, setQuantity, remove, reset } = useCart();
@@ -134,11 +128,11 @@ export function CartControl() {
       return "";
     }
 
-    const normalizedNumber = normalizeWhatsappNumber(getCheckoutWhatsappNumber());
+    const normalizedNumber = sanitizeWhatsappNumber(whatsappNumber);
     const message = buildCheckoutMessage(items, total);
 
     return `https://wa.me/${normalizedNumber}?text=${encodeURIComponent(message)}`;
-  }, [items, total]);
+  }, [items, total, whatsappNumber]);
 
   const canUseDom = typeof document !== "undefined";
 

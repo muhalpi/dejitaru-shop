@@ -4,13 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { ChevronLeft } from "lucide-react";
-import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/blog";
+import { getBlogPostBySlug } from "@/lib/blog";
 
 type BlogDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
-
-export const dynamic = "force-static";
 
 const mdxComponents = {
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -20,10 +18,19 @@ const mdxComponents = {
     <h3 className="mt-6 text-xl font-semibold text-blue-50" {...props} />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="mt-4 leading-8 text-blue-100/80" {...props} />
+    <p className="mt-4 whitespace-pre-line leading-8 text-blue-100/80" {...props} />
+  ),
+  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <a
+      className="font-medium text-fuchsia-200 underline decoration-fuchsia-300/70 underline-offset-4 transition hover:text-fuchsia-100"
+      {...props}
+    />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <ul className="mt-4 list-disc space-y-2 pl-6 text-blue-100/80" {...props} />
+  ),
+  ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
+    <ol className="mt-4 list-decimal space-y-2 pl-6 text-blue-100/80" {...props} />
   ),
   li: (props: React.HTMLAttributes<HTMLLIElement>) => <li {...props} />,
   strong: (props: React.HTMLAttributes<HTMLElement>) => (
@@ -31,10 +38,7 @@ const mdxComponents = {
   ),
 };
 
-export async function generateStaticParams() {
-  const posts = await getAllBlogPosts();
-  return posts.map((post) => ({ slug: post.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

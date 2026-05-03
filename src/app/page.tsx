@@ -14,7 +14,7 @@ import {
   Star,
 } from "lucide-react";
 import { formatRupiah, getStartingPriceSummary, hasActivePromo } from "@/data/products";
-import { CartControl } from "@/components/cart/cart-control";
+import { StoreHeader } from "@/components/layout/store-header";
 import { getCheckoutWhatsappNumber } from "@/config/contact";
 import { getStorePopularProducts } from "@/lib/store-data";
 import { getLatestBlogPosts } from "@/lib/blog";
@@ -23,7 +23,7 @@ const navLinks = [
   { label: "Beranda", href: "/" },
   { label: "Produk", href: "/produk" },
   { label: "Blog", href: "/blog" },
-  { label: "Kontak", href: "https://wa.me/6289514317357" },
+  { label: "Kontak", href: "#footer" },
 ];
 
 const benefits = [
@@ -117,42 +117,22 @@ export default async function Home() {
     getLatestBlogPosts(4),
   ]);
 
-  const whatsappNumber = getCheckoutWhatsappNumber();
+  const whatsappNumber = await getCheckoutWhatsappNumber();
   const whatsappContactLink = `https://wa.me/${whatsappNumber}`;
+  const resolvedNavLinks = navLinks.map((link) =>
+    link.label === "Kontak" ? { ...link, href: whatsappContactLink } : link,
+  );
 
   return (
     <div className="min-h-screen bg-[#03041a] text-white">
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_20%_5%,rgba(131,72,255,0.28),transparent_30%),radial-gradient(circle_at_80%_8%,rgba(0,163,255,0.20),transparent_35%),radial-gradient(circle_at_55%_65%,rgba(105,45,255,0.16),transparent_45%),linear-gradient(to_bottom,#040521,#020313)]" />
 
       <div className="mx-auto max-w-[1160px] px-4 pb-12 pt-4 sm:px-6 lg:px-8 lg:pt-6">
-        <header className="mb-8 flex items-center justify-between rounded-2xl border border-white/10 bg-[#080a2f]/80 px-4 py-3 backdrop-blur md:mb-10 md:px-6">
-          <Image
-            src="/assets/logo-dejitaru-shop.png"
-            alt="Dejitaru Shop"
-            width={250}
-            height={82}
-            priority
-            className="h-12 w-auto sm:h-14"
-          />
-
-          <nav className="hidden items-center gap-10 text-sm text-white/80 md:flex">
-            {navLinks.map((link, index) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={`transition hover:text-white ${
-                  index === 0
-                    ? "border-b-2 border-fuchsia-400 pb-1 text-fuchsia-300"
-                    : ""
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          <CartControl />
-        </header>
+        <StoreHeader
+          activeLabel="Beranda"
+          whatsappContactLink={whatsappContactLink}
+          whatsappNumber={whatsappNumber}
+        />
 
         <main className="space-y-8 lg:space-y-10">
           <section className="grid gap-8 rounded-3xl border border-white/10 bg-[#070a2d]/70 p-5 backdrop-blur md:p-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
@@ -383,15 +363,18 @@ export default async function Home() {
                     key={post.slug}
                     className="rounded-2xl border border-white/10 bg-[#0a0f3e]/85 p-4"
                   >
-                    <div className="relative mb-3 h-28 overflow-hidden rounded-xl border border-white/10">
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="group relative mb-3 block h-28 overflow-hidden rounded-xl border border-white/10"
+                    >
                       <Image
                         src={post.cover}
                         alt={post.title}
                         fill
-                        className="object-cover"
+                        className="object-cover transition duration-300 group-hover:scale-[1.03]"
                         sizes="(min-width: 1280px) 250px, (min-width: 768px) 45vw, 100vw"
                       />
-                    </div>
+                    </Link>
                     <p className="mb-1 text-xs text-blue-100/55">
                       {new Date(post.date).toLocaleDateString("id-ID", {
                         day: "2-digit",
@@ -400,7 +383,12 @@ export default async function Home() {
                       })}
                     </p>
                     <h3 className="mb-2 text-sm font-semibold leading-snug md:text-base">
-                      {post.title}
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="transition hover:text-fuchsia-200"
+                      >
+                        {post.title}
+                      </Link>
                     </h3>
                     <p className="text-sm text-blue-100/65">{post.excerpt}</p>
                     <Link
@@ -464,7 +452,7 @@ export default async function Home() {
             <div>
               <h3 className="mb-3 font-semibold">Navigasi</h3>
               <ul className="space-y-2 text-sm text-blue-100/65">
-                {navLinks.map((item) => (
+                {resolvedNavLinks.map((item) => (
                   <li key={item.label}>
                     <Link href={item.href} className="transition hover:text-blue-100">
                       {item.label}

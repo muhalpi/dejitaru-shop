@@ -1,16 +1,8 @@
-export const DEFAULT_WHATSAPP_NUMBER = "6281234567890";
+import { getStoreSettingsRow } from "@/lib/store-settings";
+import { DEFAULT_WHATSAPP_NUMBER, sanitizeWhatsappNumber } from "@/lib/whatsapp";
+export { DEFAULT_WHATSAPP_NUMBER, sanitizeWhatsappNumber };
 
-function sanitizeWhatsappNumber(value: string): string {
-  const digits = value.replace(/\D/g, "");
-
-  if (digits.startsWith("0")) {
-    return `62${digits.slice(1)}`;
-  }
-
-  return digits;
-}
-
-export function getCheckoutWhatsappNumber(): string {
+function resolveEnvWhatsappNumber() {
   const envNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.trim() ?? "";
   const sanitizedEnvNumber = sanitizeWhatsappNumber(envNumber);
 
@@ -19,4 +11,15 @@ export function getCheckoutWhatsappNumber(): string {
   }
 
   return sanitizeWhatsappNumber(DEFAULT_WHATSAPP_NUMBER);
+}
+
+export async function getCheckoutWhatsappNumber(): Promise<string> {
+  const settings = await getStoreSettingsRow();
+  const dbNumber = sanitizeWhatsappNumber(settings?.whatsappNumber ?? "");
+
+  if (dbNumber.length >= 9) {
+    return dbNumber;
+  }
+
+  return resolveEnvWhatsappNumber();
 }
