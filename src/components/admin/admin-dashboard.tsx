@@ -800,6 +800,10 @@ export function AdminDashboard({ initialProducts }: AdminDashboardProps) {
     try {
       const imageUrl = await uploadProductImage(editImageFile, slugHint);
       applyImagePathToEditForm(imageUrl);
+      setProductDirtyById((current) => ({
+        ...current,
+        [activeProduct.id]: true,
+      }));
       setEditImageFile(null);
       setEditImageInputKey((current) => current + 1);
       setFeedback("Upload gambar produk berhasil. Simpan perubahan produk untuk menerapkan.");
@@ -1119,6 +1123,16 @@ export function AdminDashboard({ initialProducts }: AdminDashboardProps) {
                             : "border-white/10 bg-[#0b103d]/45 hover:border-fuchsia-400/40"
                         }`}
                       >
+                        {product.imageUrl ? (
+                          <>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={product.imageUrl}
+                              alt={`Thumbnail ${product.name}`}
+                              className="mb-2 h-12 w-12 rounded-md border border-white/15 object-cover"
+                            />
+                          </>
+                        ) : null}
                         <p className="text-sm font-semibold">{product.name}</p>
                         <p className="mt-0.5 text-xs text-blue-100/60">/{product.slug}</p>
                         <div className="mt-2">

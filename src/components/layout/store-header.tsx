@@ -25,15 +25,15 @@ export function StoreHeader({
   ];
 
   return (
-    <header className="mb-8 flex items-center justify-between rounded-2xl border border-white/10 bg-[#080a2f]/80 px-4 py-3 backdrop-blur md:mb-10 md:px-6">
-      <Link href="/" className="inline-flex">
+    <header className="mb-8 flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#080a2f]/80 px-3 py-2.5 backdrop-blur md:mb-10 md:px-6 md:py-3">
+      <Link href="/" className="inline-flex shrink-0">
         <Image
           src="/assets/logo-dejitaru-shop.png"
           alt="Dejitaru Shop"
           width={250}
           height={82}
           priority
-          className="h-12 w-auto sm:h-14"
+          className="h-9 w-auto sm:h-11 md:h-12"
         />
       </Link>
 
@@ -53,9 +53,12 @@ export function StoreHeader({
         ))}
       </nav>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-[#0b103d]/55 p-1 md:border-0 md:bg-transparent md:p-0">
         <MobileNavMenu links={links} activeLabel={activeLabel} />
-        <CartControl whatsappNumber={whatsappNumber} />
+        <CartControl
+          whatsappNumber={whatsappNumber}
+          triggerClassName="size-10 border-white/25 bg-white/5 p-0 text-blue-100 hover:border-fuchsia-400/60 hover:bg-white/10"
+        />
       </div>
     </header>
   );

@@ -48,6 +48,7 @@ export type ProductItem = {
   name: string;
   category: ProductCategory;
   description: string;
+  imageUrl?: string;
   variants: ProductVariant[];
   terms: string[];
   requirements: ProductRequirementField[];

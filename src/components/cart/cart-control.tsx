@@ -8,6 +8,7 @@ import { formatRupiah } from "@/data/products";
 import { sanitizeWhatsappNumber } from "@/lib/whatsapp";
 import { getCartSubtotal, type CartItem } from "@/lib/cart";
 import { useCart } from "@/hooks/use-cart";
+import { cn } from "@/lib/utils";
 
 const customerInputLabels: Record<string, string> = {
   customerWhatsapp: "WhatsApp",
@@ -70,9 +71,10 @@ function buildCheckoutMessage(items: CartItem[], total: number): string {
 
 type CartControlProps = {
   whatsappNumber: string;
+  triggerClassName?: string;
 };
 
-export function CartControl({ whatsappNumber }: CartControlProps) {
+export function CartControl({ whatsappNumber, triggerClassName }: CartControlProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isBadgeBump, setIsBadgeBump] = useState(false);
   const { items, count, total, setQuantity, remove, reset } = useCart();
@@ -141,9 +143,12 @@ export function CartControl({ whatsappNumber }: CartControlProps) {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className={`relative rounded-full border border-fuchsia-400/45 p-2 text-fuchsia-200 transition hover:bg-fuchsia-500/10 ${
+        className={cn(
+          `relative rounded-full border border-fuchsia-400/45 p-2 text-fuchsia-200 transition hover:bg-fuchsia-500/10 ${
           isBadgeBump ? "animate-cart-bump" : ""
-        }`}
+        }`,
+          triggerClassName,
+        )}
         aria-label="Buka cart"
       >
         <ShoppingCart className="size-5" />

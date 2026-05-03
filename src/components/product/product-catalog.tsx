@@ -135,12 +135,25 @@ export function ProductCatalog({ products }: ProductCatalogProps) {
                         key={product.slug}
                         className="flex h-full min-h-[320px] flex-col rounded-2xl border border-white/10 bg-[#0a0f3c]/85 p-4"
                       >
-                        <div
-                          className={`mb-3 flex h-24 items-center justify-center rounded-xl bg-gradient-to-br ${product.color}`}
-                        >
-                          <span className="text-3xl font-extrabold tracking-wider text-white/95">
-                            {product.short}
-                          </span>
+                        <div className="mb-3 h-24 overflow-hidden rounded-xl border border-white/10">
+                          {product.imageUrl ? (
+                            <>
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={product.imageUrl}
+                                alt={product.name}
+                                className="h-full w-full object-cover"
+                              />
+                            </>
+                          ) : (
+                            <div
+                              className={`flex h-full items-center justify-center bg-gradient-to-br ${product.color}`}
+                            >
+                              <span className="text-3xl font-extrabold tracking-wider text-white/95">
+                                {product.short}
+                              </span>
+                            </div>
+                          )}
                         </div>
                         <span className="mb-2 inline-flex w-fit rounded-full border border-fuchsia-400/40 bg-fuchsia-400/10 px-2.5 py-1 text-[11px] text-fuchsia-200">
                           {product.category}

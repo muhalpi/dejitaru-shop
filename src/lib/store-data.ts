@@ -170,6 +170,7 @@ async function fetchCatalogFromDatabase(): Promise<DbCatalogResponse | null> {
       name: row.name,
       category: uiCategory,
       description: row.description,
+      imageUrl: row.imageUrl ?? undefined,
       variants,
       terms: splitTerms(row.termsAndConditions),
       requirements,
